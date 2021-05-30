@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_pro_firebase_app/pages/auth/login.dart';
-import 'package:flutter_pro_firebase_app/pages/auth/register.dart';
+import 'package:flutter_pro_firebase_app/pages/auth/signIn.dart';
+import 'package:flutter_pro_firebase_app/pages/auth/signUp.dart';
 import 'package:flutter_pro_firebase_app/pages/home/home.dart';
 
 void main() {
@@ -32,11 +32,11 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       routes: {
-        LoginPage.routeName: (_) => LoginPage(),
-        RegisterPage.routeName: (_) => RegisterPage(),
+        SignInPage.routeName: (_) => SignInPage(),
+        SignUpPage.routeName: (_) => SignUpPage(),
         HomePage.routeName: (_) => HomePage(),
       },
-      initialRoute: LoginPage.routeName,
+      initialRoute: SignInPage.routeName,
     );
   }
 }

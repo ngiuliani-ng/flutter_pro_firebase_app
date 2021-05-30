@@ -1,19 +1,58 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_pro_firebase_app/pages/auth/register.dart';
+import 'package:flutter_pro_firebase_app/pages/auth/signIn.dart';
 
 import 'package:flutter_pro_firebase_app/components/appFormField.dart';
 import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
-class LoginPage extends StatefulWidget {
-  static String routeName = '/login';
+class SignUpPage extends StatefulWidget {
+  static String routeName = '/sign-up';
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
+  void onSignUp() {
+    final _firstName = _firstNameController.text.trim();
+    final _lastName = _lastNameController.text.trim();
+    final _email = _emailController.text.trim();
+    final _password = _passwordController.text.trim();
+    final _confirmPassword = _confirmPasswordController.text.trim();
+
+    print('$_firstName - $_lastName - $_email - $_password - $_confirmPassword');
+  }
+
+  void onSignUpWithFacebook() {
+    print('Sign Up with Facebook');
+  }
+
+  void onSignUpWithGoogle() {
+    print('Sign Up with Google');
+  }
+
+  void changePasswordVisibility() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+    });
+  }
+
+  void changeConfirmPasswordVisibility() {
+    setState(() {
+      _obscureConfirmPassword = !_obscureConfirmPassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       actions: [
         TextButton(
           child: Text(
-            'Don\'t have an account? Sign Up',
+            'Already have an account? Sign In',
             style: TextStyle(
               fontSize: 16,
               color: Colors.black,
@@ -41,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               Colors.transparent,
             ),
           ),
-          onPressed: () => Navigator.pushNamed(context, RegisterPage.routeName),
+          onPressed: () => Navigator.pushNamed(context, SignInPage.routeName),
         ),
       ],
     );
@@ -57,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hello!',
+              'Welcome!',
               style: TextStyle(
                 fontSize: 48,
                 fontWeight: FontWeight.bold,
@@ -67,9 +106,28 @@ class _LoginPageState extends State<LoginPage> {
             AppFormField(
               color: Colors.black12,
               radius: 8,
+              textInputType: TextInputType.name,
+              hintText: 'First Name',
+              obscureText: false,
+              controller: _firstNameController,
+            ),
+            SizedBox(height: 16),
+            AppFormField(
+              color: Colors.black12,
+              radius: 8,
+              textInputType: TextInputType.name,
+              hintText: 'Last Name',
+              obscureText: false,
+              controller: _lastNameController,
+            ),
+            SizedBox(height: 16),
+            AppFormField(
+              color: Colors.black12,
+              radius: 8,
               textInputType: TextInputType.emailAddress,
               hintText: 'Email',
               obscureText: false,
+              controller: _emailController,
             ),
             SizedBox(height: 16),
             AppFormField(
@@ -77,7 +135,23 @@ class _LoginPageState extends State<LoginPage> {
               radius: 8,
               textInputType: TextInputType.text,
               hintText: 'Password',
-              obscureText: true,
+              obscureText: _obscurePassword,
+              controller: _passwordController,
+              iconButton: true,
+              icon: _obscurePassword ? Icons.visibility : Icons.visibility_off,
+              onPressed: changePasswordVisibility,
+            ),
+            SizedBox(height: 16),
+            AppFormField(
+              color: Colors.black12,
+              radius: 8,
+              textInputType: TextInputType.text,
+              hintText: 'Confirm Password',
+              obscureText: _obscureConfirmPassword,
+              controller: _confirmPasswordController,
+              iconButton: true,
+              icon: _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+              onPressed: changeConfirmPasswordVisibility,
             ),
             SizedBox(height: 16),
             AppButton(
@@ -87,12 +161,12 @@ class _LoginPageState extends State<LoginPage> {
               textColor: Colors.white,
               borderRadius: 8,
               child: Text(
-                'Sign In',
+                'Sign Up',
                 style: TextStyle(
                   fontSize: 16,
                 ),
               ),
-              onPressed: () {},
+              onPressed: onSignUp,
             ),
             SizedBox(height: 32),
             Row(
@@ -137,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    onPressed: () {},
+                    onPressed: onSignUpWithFacebook,
                   ),
                 ),
                 SizedBox(width: 24),
@@ -165,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    onPressed: () {},
+                    onPressed: onSignUpWithGoogle,
                   ),
                 ),
               ],

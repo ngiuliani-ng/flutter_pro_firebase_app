@@ -1,11 +1,11 @@
 App:
     Grafica:
-        ✔ Sviluppo LoginPage. @done(21-05-27 06:40)
+        ✔ Sviluppo SignInPage. @done(21-05-27 06:40)
             ✔ Sviluppo AppFormField. @done(21-05-27 06:00)
                 Componente custom riutilizzabile all'interno dell'app.
             ✔ Sviluppo AppDivider. @done(21-05-27 06:00)
                 Componente custom riutilizzabile all'interno dell'app.
             ✔ Sviluppo AppButton. @done(21-05-27 06:00)
                 Componente custom riutilizzabile all'interno dell'app.
-        ✔ Sviluppo RegisterPage. @done(21-05-30 10:39)
+        ✔ Sviluppo SignUpPage. @done(21-05-30 10:39)
         ☐ Sviluppo HomePage.

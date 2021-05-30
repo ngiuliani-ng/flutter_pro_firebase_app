@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
+  /// Componente custom riutilizzabile all'interno dell'app.
   AppButton({
     required this.height,
     required this.minWidth,

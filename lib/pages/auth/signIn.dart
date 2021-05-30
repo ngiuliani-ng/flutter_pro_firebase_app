@@ -1,25 +1,51 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_pro_firebase_app/pages/auth/login.dart';
+import 'package:flutter_pro_firebase_app/pages/auth/signUp.dart';
 
 import 'package:flutter_pro_firebase_app/components/appFormField.dart';
 import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
-class RegisterPage extends StatefulWidget {
-  static String routeName = '/register';
+class SignInPage extends StatefulWidget {
+  static String routeName = '/sign-in';
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _SignInPageState extends State<SignInPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _obscurePassword = true;
+
+  void onSignIn() {
+    final _email = _emailController.text.trim();
+    final _password = _passwordController.text.trim();
+
+    print('$_email - $_password');
+  }
+
+  void onSignInWithFacebook() {
+    print('Sign In with Facebook');
+  }
+
+  void onSignInWithGoogle() {
+    print('Sign In with Google');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
       body: body(),
     );
+  }
+
+  void changePasswordVisibility() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+    });
   }
 
   PreferredSizeWidget appBar() {
@@ -29,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
       actions: [
         TextButton(
           child: Text(
-            'Already have an account? Sign In',
+            'Don\'t have an account? Sign Up',
             style: TextStyle(
               fontSize: 16,
               color: Colors.black,
@@ -41,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Colors.transparent,
             ),
           ),
-          onPressed: () => Navigator.pushNamed(context, LoginPage.routeName),
+          onPressed: () => Navigator.pushNamed(context, SignUpPage.routeName),
         ),
       ],
     );
@@ -57,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Welcome!',
+              'Hello!',
               style: TextStyle(
                 fontSize: 48,
                 fontWeight: FontWeight.bold,
@@ -67,25 +93,10 @@ class _RegisterPageState extends State<RegisterPage> {
             AppFormField(
               color: Colors.black12,
               radius: 8,
-              textInputType: TextInputType.name,
-              hintText: 'First Name',
-              obscureText: false,
-            ),
-            SizedBox(height: 16),
-            AppFormField(
-              color: Colors.black12,
-              radius: 8,
-              textInputType: TextInputType.name,
-              hintText: 'Last Name',
-              obscureText: false,
-            ),
-            SizedBox(height: 16),
-            AppFormField(
-              color: Colors.black12,
-              radius: 8,
               textInputType: TextInputType.emailAddress,
               hintText: 'Email',
               obscureText: false,
+              controller: _emailController,
             ),
             SizedBox(height: 16),
             AppFormField(
@@ -93,15 +104,11 @@ class _RegisterPageState extends State<RegisterPage> {
               radius: 8,
               textInputType: TextInputType.text,
               hintText: 'Password',
-              obscureText: true,
-            ),
-            SizedBox(height: 16),
-            AppFormField(
-              color: Colors.black12,
-              radius: 8,
-              textInputType: TextInputType.text,
-              hintText: 'Confirm Password',
-              obscureText: true,
+              obscureText: _obscurePassword,
+              controller: _passwordController,
+              iconButton: true,
+              icon: _obscurePassword ? Icons.visibility : Icons.visibility_off,
+              onPressed: changePasswordVisibility,
             ),
             SizedBox(height: 16),
             AppButton(
@@ -111,12 +118,12 @@ class _RegisterPageState extends State<RegisterPage> {
               textColor: Colors.white,
               borderRadius: 8,
               child: Text(
-                'Sign Up',
+                'Sign In',
                 style: TextStyle(
                   fontSize: 16,
                 ),
               ),
-              onPressed: () {},
+              onPressed: onSignIn,
             ),
             SizedBox(height: 32),
             Row(
@@ -161,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ],
                     ),
-                    onPressed: () {},
+                    onPressed: onSignInWithFacebook,
                   ),
                 ),
                 SizedBox(width: 24),
@@ -189,7 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ],
                     ),
-                    onPressed: () {},
+                    onPressed: onSignInWithGoogle,
                   ),
                 ),
               ],

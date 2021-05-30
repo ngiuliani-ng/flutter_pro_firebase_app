@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppDivider extends StatelessWidget {
+  /// Componente custom riutilizzabile all'interno dell'app.
   AppDivider({
     required this.height,
     required this.color,
