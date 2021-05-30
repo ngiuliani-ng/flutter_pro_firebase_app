@@ -17,12 +17,40 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar(),
       body: body(),
     );
   }
 
+  PreferredSizeWidget appBar() {
+    return AppBar(
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      actions: [
+        TextButton(
+          child: Text(
+            'Don\'t have an account? Sign Up',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          style: ButtonStyle(
+            overlayColor: MaterialStateProperty.all(
+              Colors.transparent,
+            ),
+          ),
+          onPressed: () => Navigator.pushNamed(context, RegisterPage.routeName),
+        ),
+      ],
+    );
+  }
+
   Widget body() {
-    return SafeArea(
+    /// Qui la [SafeArea] è stata incapsulata all'interno del [SingleChildScrollView]
+    /// per risolvere il problema della sovrapposizione della tastiera virtuale.
+    return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(32),
         child: Column(
@@ -31,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               'Hello!',
               style: TextStyle(
-                fontSize: 32,
+                fontSize: 48,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -139,22 +167,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {},
                   ),
-                ),
-              ],
-            ),
-            Expanded(child: SizedBox()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  child: Text(
-                    'Don\'t have an account? Sign Up',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, RegisterPage.routeName),
                 ),
               ],
             ),
