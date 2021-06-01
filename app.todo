@@ -1,11 +1,23 @@
 App:
     Grafica:
-        ✔ Sviluppo SignInPage. @done(21-05-27 06:40)
-            ✔ Sviluppo AppFormField. @done(21-05-27 06:00)
-                Componente custom riutilizzabile all'interno dell'app.
-            ✔ Sviluppo AppDivider. @done(21-05-27 06:00)
-                Componente custom riutilizzabile all'interno dell'app.
+        Components:
             ✔ Sviluppo AppButton. @done(21-05-27 06:00)
-                Componente custom riutilizzabile all'interno dell'app.
-        ✔ Sviluppo SignUpPage. @done(21-05-30 10:39)
-        ☐ Sviluppo HomePage.
+            ✔ Sviluppo AppDivider. @done(21-05-27 06:00)
+            ✔ Sviluppo AppFormField. @done(21-05-27 06:00)
+        Auth:
+            ✔ Sviluppo SignInPage. @done(21-05-27 06:40)
+            ✔ Sviluppo SignUpPage. @done(21-05-30 10:39)
+            ✔ Sviluppo SplashPage. @done(21-06-01 20:48)
+        General:
+            ✔ Sviluppo ErrorPage. @done(21-06-01 20:48)
+        Home:
+            ☐ Sviluppo HomePage.
+    Firebase:
+        Libreria: https://pub.dev/packages/firebase_core
+        Libreria: https://pub.dev/packages/firebase_auth
+        ✔ Istallazione Android. @done(21-05-31 06:05)
+            Riferimento: https://firebase.flutter.dev/docs/installation/android
+        ☐ Integrazione Firebase.
+            Riferimento: https://firebase.flutter.dev/docs/auth/usage
+            ✔ Inizializzazione Firebase. @done(21-06-01 18:48)
+                Riferimento: https://firebase.flutter.dev/docs/overview/#initializing-flutterfire

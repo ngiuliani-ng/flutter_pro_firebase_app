@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:flutter_pro_firebase_app/pages/general/error.dart';
+import 'package:flutter_pro_firebase_app/pages/auth/splash.dart';
 import 'package:flutter_pro_firebase_app/pages/auth/signIn.dart';
-import 'package:flutter_pro_firebase_app/pages/auth/signUp.dart';
-import 'package:flutter_pro_firebase_app/pages/home/home.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
 }
 
-class App extends StatelessWidget {
+/// Qui utilizziamo uno [StatefulWidget] perchè ci permette di creare la [Future],
+/// quindi di inizializzare FlutterFire, solo una volta; non importa quante volte [App] verrà ricostruita da Flutter.
+///
+/// Se invece avessimo mantenuto uno [StatelessWidget] sarebbe stato re-inizializzato FlutterFire ogni volta,
+/// facendo rientrare l'applicazione, nel [FutureBuilder], in stato di caricamento.
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  /// Inizializzazione FlutterFire.
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -31,12 +47,23 @@ class App extends StatelessWidget {
         primaryColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
       ),
-      routes: {
-        SignInPage.routeName: (_) => SignInPage(),
-        SignUpPage.routeName: (_) => SignUpPage(),
-        HomePage.routeName: (_) => HomePage(),
-      },
-      initialRoute: SignInPage.routeName,
+      home: FutureBuilder(
+        /// Inizializzazione FlutterFire.
+        future: _initialization,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return ErrorPage();
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            return SignInPage();
+          } else if (snapshot.connectionState == ConnectionState.none) {
+            return ErrorPage();
+          } else {
+            return SplashPage();
+          }
+        },
+      ),
     );
   }
 }

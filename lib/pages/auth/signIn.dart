@@ -7,7 +7,8 @@ import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
 class SignInPage extends StatefulWidget {
-  static String routeName = '/sign-in';
+  /// '/folder/file'
+  static String routeName = '/auth/sign-in';
 
   @override
   _SignInPageState createState() => _SignInPageState();

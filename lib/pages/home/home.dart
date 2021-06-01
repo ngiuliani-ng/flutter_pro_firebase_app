@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  static String routeName = '/home';
+  /// '/folder/file'
+  static String routeName = '/home/home';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: body(),
-    );
-  }
-
-  Widget body() {
-    return SafeArea(
-      child: Container(),
-    );
+    return Scaffold();
   }
 }

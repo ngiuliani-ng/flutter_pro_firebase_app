@@ -7,7 +7,8 @@ import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
 class SignUpPage extends StatefulWidget {
-  static String routeName = '/sign-up';
+  /// '/folder/file'
+  static String routeName = '/auth/sign-up';
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
