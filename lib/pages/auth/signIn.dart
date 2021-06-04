@@ -7,9 +7,6 @@ import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
 class SignInPage extends StatefulWidget {
-  /// '/folder/file'
-  static String routeName = '/auth/sign-in';
-
   @override
   _SignInPageState createState() => _SignInPageState();
 }
@@ -68,7 +65,12 @@ class _SignInPageState extends State<SignInPage> {
               Colors.transparent,
             ),
           ),
-          onPressed: () => Navigator.pushNamed(context, SignUpPage.routeName),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SignUpPage(),
+            ),
+          ),
         ),
       ],
     );
@@ -93,23 +95,26 @@ class _SignInPageState extends State<SignInPage> {
             SizedBox(height: 32),
             AppFormField(
               color: Colors.black12,
-              radius: 8,
+              borderRadius: 8,
+              borderColor: Colors.black,
               textInputType: TextInputType.emailAddress,
               hintText: 'Email',
               obscureText: false,
               controller: _emailController,
+              error: '',
             ),
             SizedBox(height: 16),
             AppFormField(
               color: Colors.black12,
-              radius: 8,
+              borderRadius: 8,
+              borderColor: Colors.black,
               textInputType: TextInputType.text,
               hintText: 'Password',
               obscureText: _obscurePassword,
               controller: _passwordController,
-              iconButton: true,
               icon: _obscurePassword ? Icons.visibility : Icons.visibility_off,
               onPressed: changePasswordVisibility,
+              error: 'Invalid email.',
             ),
             SizedBox(height: 16),
             AppButton(

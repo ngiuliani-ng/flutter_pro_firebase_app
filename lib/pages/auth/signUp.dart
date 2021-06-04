@@ -7,9 +7,6 @@ import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
 class SignUpPage extends StatefulWidget {
-  /// '/folder/file'
-  static String routeName = '/auth/sign-up';
-
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -81,7 +78,12 @@ class _SignUpPageState extends State<SignUpPage> {
               Colors.transparent,
             ),
           ),
-          onPressed: () => Navigator.pushNamed(context, SignInPage.routeName),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SignInPage(),
+            ),
+          ),
         ),
       ],
     );
@@ -106,51 +108,59 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(height: 32),
             AppFormField(
               color: Colors.black12,
-              radius: 8,
+              borderRadius: 8,
+              borderColor: Colors.black,
               textInputType: TextInputType.name,
               hintText: 'First Name',
               obscureText: false,
               controller: _firstNameController,
+              error: '',
             ),
             SizedBox(height: 16),
             AppFormField(
               color: Colors.black12,
-              radius: 8,
+              borderRadius: 8,
+              borderColor: Colors.black,
               textInputType: TextInputType.name,
               hintText: 'Last Name',
               obscureText: false,
               controller: _lastNameController,
+              error: 'Field required.',
             ),
             SizedBox(height: 16),
             AppFormField(
               color: Colors.black12,
-              radius: 8,
+              borderRadius: 8,
+              borderColor: Colors.black,
               textInputType: TextInputType.emailAddress,
               hintText: 'Email',
               obscureText: false,
               controller: _emailController,
+              error: '',
             ),
             SizedBox(height: 16),
             AppFormField(
               color: Colors.black12,
-              radius: 8,
+              borderRadius: 8,
+              borderColor: Colors.black,
               textInputType: TextInputType.text,
               hintText: 'Password',
               obscureText: _obscurePassword,
               controller: _passwordController,
-              iconButton: true,
+              error: '',
               icon: _obscurePassword ? Icons.visibility : Icons.visibility_off,
               onPressed: changePasswordVisibility,
             ),
             SizedBox(height: 16),
             AppFormField(
               color: Colors.black12,
-              radius: 8,
+              borderRadius: 8,
+              borderColor: Colors.black,
               textInputType: TextInputType.text,
               hintText: 'Confirm Password',
               obscureText: _obscureConfirmPassword,
               controller: _confirmPasswordController,
-              iconButton: true,
+              error: '',
               icon: _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
               onPressed: changeConfirmPasswordVisibility,
             ),

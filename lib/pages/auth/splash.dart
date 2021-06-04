@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatelessWidget {
-  /// '/folder/file'
-  static String routeName = '/auth/splash';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

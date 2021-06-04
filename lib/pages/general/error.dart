@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
-  /// '/folder/file'
-  static String routeName = '/general/error';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
