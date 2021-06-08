@@ -9,7 +9,7 @@ class AppFormField extends StatelessWidget {
     required this.textInputType,
     required this.hintText,
     required this.obscureText,
-    this.controller,
+    required this.controller,
     this.error = '',
     this.icon,
     this.onPressed,
@@ -34,7 +34,7 @@ class AppFormField extends StatelessWidget {
   final bool obscureText;
 
   /// Proprietà del [TextFormField].
-  final TextEditingController? controller;
+  final TextEditingController controller;
 
   /// Proprietà del [Text] e del [Visibility] padre.
   final String error;
@@ -47,8 +47,8 @@ class AppFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool _iconButtonVisibility = icon != null ? true : false;
-    final bool _errorTextVisibility = error != '' ? true : false;
+    final bool _iconVisibility = icon != null ? true : false;
+    final bool _errorVisibility = error != '' ? true : false;
 
     return Column(
       children: [
@@ -59,7 +59,7 @@ class AppFormField extends StatelessWidget {
             color: color,
             borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(
-              color: _errorTextVisibility ? Colors.red : borderColor,
+              color: _errorVisibility ? Colors.red : borderColor,
             ),
           ),
           child: Row(
@@ -76,11 +76,11 @@ class AppFormField extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: _iconButtonVisibility,
+                visible: _iconVisibility,
                 child: SizedBox(width: borderRadius),
               ),
               Visibility(
-                visible: _iconButtonVisibility,
+                visible: _iconVisibility,
                 child: IconButton(
                   icon: Icon(icon),
                   splashRadius: 18,
@@ -91,11 +91,11 @@ class AppFormField extends StatelessWidget {
           ),
         ),
         Visibility(
-          visible: _errorTextVisibility,
+          visible: _errorVisibility,
           child: SizedBox(height: borderRadius),
         ),
         Visibility(
-          visible: _errorTextVisibility,
+          visible: _errorVisibility,
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: borderRadius),

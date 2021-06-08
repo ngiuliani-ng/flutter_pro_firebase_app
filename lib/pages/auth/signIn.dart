@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_pro_firebase_app/utility/isValid.dart';
+
 import 'package:flutter_pro_firebase_app/pages/auth/signUp.dart';
 
 import 'package:flutter_pro_firebase_app/components/appFormField.dart';
@@ -15,13 +17,28 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  String _emailError = '';
+  String _passwordError = '';
+
   bool _obscurePassword = true;
 
   void onSignIn() {
     final _email = _emailController.text.trim();
     final _password = _passwordController.text.trim();
 
-    print('$_email - $_password');
+    setState(() {
+      _emailError = '';
+      _passwordError = '';
+    });
+
+    final valid = isValidBlock((when) {
+      when(_email.isEmpty, () => setState(() => _emailError = 'Required field'));
+      when(_email.isNotEmpty && !isValidEmail(_email), () => setState(() => _emailError = 'Invalid email'));
+      when(_password.isEmpty, () => setState(() => _passwordError = 'Required field'));
+    });
+    if (!valid) return;
+
+    print('Sign In');
   }
 
   void onSignInWithFacebook() {
@@ -32,18 +49,18 @@ class _SignInPageState extends State<SignInPage> {
     print('Sign In with Google');
   }
 
+  void changePasswordVisibility() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
       body: body(),
     );
-  }
-
-  void changePasswordVisibility() {
-    setState(() {
-      _obscurePassword = !_obscurePassword;
-    });
   }
 
   PreferredSizeWidget appBar() {
@@ -68,7 +85,9 @@ class _SignInPageState extends State<SignInPage> {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SignUpPage(),
+              builder: (context) => SignUpPage(
+                emailSignIn: _emailController.text.trim(),
+              ),
             ),
           ),
         ),
@@ -101,7 +120,7 @@ class _SignInPageState extends State<SignInPage> {
               hintText: 'Email',
               obscureText: false,
               controller: _emailController,
-              error: '',
+              error: _emailError,
             ),
             SizedBox(height: 16),
             AppFormField(
@@ -114,7 +133,7 @@ class _SignInPageState extends State<SignInPage> {
               controller: _passwordController,
               icon: _obscurePassword ? Icons.visibility : Icons.visibility_off,
               onPressed: changePasswordVisibility,
-              error: 'Invalid email.',
+              error: _passwordError,
             ),
             SizedBox(height: 16),
             AppButton(

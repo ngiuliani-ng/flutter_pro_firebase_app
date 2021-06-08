@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_pro_firebase_app/utility/isValid.dart';
+
 import 'package:flutter_pro_firebase_app/pages/auth/signIn.dart';
 
 import 'package:flutter_pro_firebase_app/components/appFormField.dart';
@@ -7,6 +9,12 @@ import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
 class SignUpPage extends StatefulWidget {
+  SignUpPage({
+    required this.emailSignIn,
+  });
+
+  final String emailSignIn;
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -14,21 +22,56 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  late TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _passwordConfirmController = TextEditingController();
+
+  String _firstNameError = '';
+  String _lastNameError = '';
+  String _emailError = '';
+  String _passwordError = '';
+  String _passwordConfirmError = '';
 
   bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
+  bool _obscurePasswordConfirm = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _emailController = TextEditingController(text: widget.emailSignIn);
+  }
 
   void onSignUp() {
     final _firstName = _firstNameController.text.trim();
     final _lastName = _lastNameController.text.trim();
     final _email = _emailController.text.trim();
     final _password = _passwordController.text.trim();
-    final _confirmPassword = _confirmPasswordController.text.trim();
+    final _passwordConfirm = _passwordConfirmController.text.trim();
 
-    print('$_firstName - $_lastName - $_email - $_password - $_confirmPassword');
+    setState(() {
+      _firstNameError = '';
+      _lastNameError = '';
+      _emailError = '';
+      _passwordError = '';
+      _passwordConfirmError = '';
+    });
+
+    final valid = isValidBlock((when) {
+      when(_firstName.isEmpty, () => setState(() => _firstNameError = 'Required field'));
+      when(_lastName.isEmpty, () => setState(() => _lastNameError = 'Required field'));
+      when(_email.isEmpty, () => setState(() => _emailError = 'Required field'));
+      when(_email.isNotEmpty && !isValidEmail(_email), () => setState(() => _emailError = 'Invalid email'));
+      when(_password.isEmpty, () => setState(() => _passwordError = 'Required field'));
+      when(_password.isNotEmpty && _password.length < 8, () => setState(() => _passwordError = 'The password must contain at least 8 characters'));
+      when(_passwordConfirm.isEmpty, () => setState(() => _passwordConfirmError = 'Required field'));
+      when(_password.isNotEmpty && _passwordConfirm.isEmpty, () => setState(() => _passwordConfirmError = 'Invalid password'));
+      when(_password.isNotEmpty && _passwordConfirm.isNotEmpty && _password != _passwordConfirm,
+          () => setState(() => _passwordConfirmError = 'Invalid password'));
+    });
+    if (!valid) return;
+
+    print('Sign Up');
   }
 
   void onSignUpWithFacebook() {
@@ -45,9 +88,9 @@ class _SignUpPageState extends State<SignUpPage> {
     });
   }
 
-  void changeConfirmPasswordVisibility() {
+  void changePasswordConfirmVisibility() {
     setState(() {
-      _obscureConfirmPassword = !_obscureConfirmPassword;
+      _obscurePasswordConfirm = !_obscurePasswordConfirm;
     });
   }
 
@@ -114,7 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
               hintText: 'First Name',
               obscureText: false,
               controller: _firstNameController,
-              error: '',
+              error: _firstNameError,
             ),
             SizedBox(height: 16),
             AppFormField(
@@ -125,7 +168,7 @@ class _SignUpPageState extends State<SignUpPage> {
               hintText: 'Last Name',
               obscureText: false,
               controller: _lastNameController,
-              error: 'Field required.',
+              error: _lastNameError,
             ),
             SizedBox(height: 16),
             AppFormField(
@@ -136,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
               hintText: 'Email',
               obscureText: false,
               controller: _emailController,
-              error: '',
+              error: _emailError,
             ),
             SizedBox(height: 16),
             AppFormField(
@@ -147,7 +190,7 @@ class _SignUpPageState extends State<SignUpPage> {
               hintText: 'Password',
               obscureText: _obscurePassword,
               controller: _passwordController,
-              error: '',
+              error: _passwordError,
               icon: _obscurePassword ? Icons.visibility : Icons.visibility_off,
               onPressed: changePasswordVisibility,
             ),
@@ -158,11 +201,11 @@ class _SignUpPageState extends State<SignUpPage> {
               borderColor: Colors.black,
               textInputType: TextInputType.text,
               hintText: 'Confirm Password',
-              obscureText: _obscureConfirmPassword,
-              controller: _confirmPasswordController,
-              error: '',
-              icon: _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
-              onPressed: changeConfirmPasswordVisibility,
+              obscureText: _obscurePasswordConfirm,
+              controller: _passwordConfirmController,
+              error: _passwordConfirmError,
+              icon: _obscurePasswordConfirm ? Icons.visibility : Icons.visibility_off,
+              onPressed: changePasswordConfirmVisibility,
             ),
             SizedBox(height: 16),
             AppButton(
