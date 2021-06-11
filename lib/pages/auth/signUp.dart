@@ -2,19 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_pro_firebase_app/utility/isValid.dart';
 
-import 'package:flutter_pro_firebase_app/pages/auth/signIn.dart';
-
 import 'package:flutter_pro_firebase_app/components/appFormField.dart';
 import 'package:flutter_pro_firebase_app/components/appDivider.dart';
 import 'package:flutter_pro_firebase_app/components/appButton.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({
-    required this.emailSignIn,
-  });
-
-  final String emailSignIn;
-
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -22,25 +14,20 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  late TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmController = TextEditingController();
 
+  /// Default.
   String _firstNameError = '';
   String _lastNameError = '';
   String _emailError = '';
   String _passwordError = '';
   String _passwordConfirmError = '';
 
+  /// Default.
   bool _obscurePassword = true;
   bool _obscurePasswordConfirm = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _emailController = TextEditingController(text: widget.emailSignIn);
-  }
 
   void onSignUp() {
     final _firstName = _firstNameController.text.trim();
@@ -49,6 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final _password = _passwordController.text.trim();
     final _passwordConfirm = _passwordConfirmController.text.trim();
 
+    /// Reset.
     setState(() {
       _firstNameError = '';
       _lastNameError = '';
@@ -121,12 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Colors.transparent,
             ),
           ),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SignInPage(),
-            ),
-          ),
+          onPressed: () => Navigator.pop(context),
         ),
       ],
     );

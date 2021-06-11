@@ -17,15 +17,18 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  /// Default.
   String _emailError = '';
   String _passwordError = '';
 
+  /// Default.
   bool _obscurePassword = true;
 
   void onSignIn() {
     final _email = _emailController.text.trim();
     final _password = _passwordController.text.trim();
 
+    /// Reset.
     setState(() {
       _emailError = '';
       _passwordError = '';
@@ -85,9 +88,7 @@ class _SignInPageState extends State<SignInPage> {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SignUpPage(
-                emailSignIn: _emailController.text.trim(),
-              ),
+              builder: (context) => SignUpPage(),
             ),
           ),
         ),
